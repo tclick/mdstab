@@ -1,0 +1,14 @@
+{
+  "_output_dir": "/Users/tclick/Developer/python",
+  "_template": "cookiecutter-hypermodern-python/",
+  "author": "Timothy H. Click, Ph.D.",
+  "copyright_year": "2022",
+  "development_status": "Development Status :: 3 - Alpha",
+  "email": "Timothy.Click@briarcliff.edu",
+  "friendly_name": "Molecular Dynamics Setup and Trajectory Analysis for Biomolecules",
+  "github_user": "tclick",
+  "license": "GPL-3.0",
+  "package_name": "mdstab",
+  "project_name": "mdstab",
+  "version": "0.0.0"
+}
