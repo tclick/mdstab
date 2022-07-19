@@ -14,14 +14,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """Command-line interface."""
-import click
-
-
-@click.command()
-@click.version_option()
-def main() -> None:
-    """Molecular Dynamics Setup and Trajectory Analysis for Biomolecules."""
+from .cli import main
 
 
 if __name__ == "__main__":
-    main(prog_name="mdstab")  # pragma: no cover
+    main()
