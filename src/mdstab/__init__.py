@@ -33,9 +33,9 @@ else:
     PathLike = Union[str, os.PathLike]
 
 __version__: str = "0.0.0"
-__name__: str = "Timothy H. Click, Ph.D."
-__email__: str = "Timothy.Click@briarcliff.edu"
-__copyright__: str = GPLv3LaterLicense.header(name=__name__, email=__email__)
+_name: str = "Timothy H. Click, Ph.D."
+_email: str = "Timothy.Click@briarcliff.edu"
+__copyright__: str = GPLv3LaterLicense.header(name=_name, email=_email)
 
 
 def create_logging_dict(logfile: PathLike, level: int) -> Dict[str, Any]:
