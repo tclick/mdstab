@@ -32,15 +32,6 @@ else:
 
 __version__: str = "0.0.0"
 
-_MASK: Dict[str, str] = dict(
-    ca="protein and name CA",
-    cab="protein and name C[AB]",
-    backbone="backbone",
-    sidechain="protein and not backbone and not element H*)",
-    noh="protein and not element H*)",
-    all="all",
-)
-
 
 def create_logging_dict(logfile: PathLike, level: int) -> Dict[str, Any]:
     """Configure the logger.
