@@ -1,7 +1,7 @@
 [paths]
 source =
-   src
-   */site-packages
+   src/mdstab
+   */site-packages/mdstab
 
 [run]
 branch = true
