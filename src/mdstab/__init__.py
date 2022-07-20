@@ -21,6 +21,8 @@ from typing import Any
 from typing import Dict
 from typing import Union
 
+from license.licenses import GPLv3LaterLicense
+
 
 logger: logging.Logger = logging.getLogger(__name__)
 logger.addHandler(logging.NullHandler())
@@ -31,6 +33,9 @@ else:
     PathLike = Union[str, os.PathLike]
 
 __version__: str = "0.0.0"
+__name__: str = "Timothy H. Click, Ph.D."
+__email__: str = "Timothy.Click@briarcliff.edu"
+__copyright__: str = GPLv3LaterLicense.header(name=__name__, email=__email__)
 
 
 def create_logging_dict(logfile: PathLike, level: int) -> Dict[str, Any]:
