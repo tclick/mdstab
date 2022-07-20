@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """Command-line interface."""
-from .cli import main
+from mdstab.cli import main
 
 
 if __name__ == "__main__":
