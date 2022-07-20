@@ -1143,6 +1143,17 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "license"
+version = "0.1a3"
+description = "Library that encapsulates free software licenses"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+jinja2 = "*"
+
+[[package]]
 name = "livereload"
 version = "2.6.3"
 description = "Python LiveReload is an awesome tool for web developers"
@@ -2856,7 +2867,7 @@ jupyter = ["jupyter", "jupyterlab", "jupyterlab-code-formatter", "jupyterlab-mat
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "de6d248faf487405f91997e64fe98dbb29ceefb1b3a0e502dd345eefc297087b"
+content-hash = "9812b0a108ebc2c103f5b5e4d1bd92ba1ddbc96b94c5ed777417ab7ba64b9f71"
 
 [metadata.files]
 alabaster = [
@@ -3220,6 +3231,9 @@ jupyterlab-widgets = [
     {file = "jupyterlab_widgets-1.1.1.tar.gz", hash = "sha256:67d0ef1e407e0c42c8ab60b9d901cd7a4c68923650763f75bf17fb06c1943b79"},
 ]
 kiwisolver = []
+license = [
+    {file = "license-0.1a3.tar.gz", hash = "sha256:b42fa138fcb426390b95041ed683130b31ccadd541a4a7b33d211d11e962ffca"},
+]
 livereload = [
     {file = "livereload-2.6.3.tar.gz", hash = "sha256:776f2f865e59fde56490a56bcc6773b6917366bce0c267c60ee8aaf1a0959869"},
 ]
