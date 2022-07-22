@@ -2861,7 +2861,7 @@ jupyter = ["jupyter", "jupyterlab", "jupyterlab-code-formatter", "jupyterlab-mat
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "d6e0f0281af2d6affe8979d0e2342211e9f340e51b9e16e6781001e2f2164183"
+content-hash = "d9f86d550168505e014320753e443863ecff42faaffb269ffbbe9d19d6269cda"
 
 [metadata.files]
 alabaster = [
