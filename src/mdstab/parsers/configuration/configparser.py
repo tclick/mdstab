@@ -15,9 +15,10 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """Parse a configuration file."""
 import logging
-from dataclasses import dataclass
+from dataclasses import make_dataclass
 from pathlib import Path
 from typing import Any
+from typing import Dict
 from typing import List
 
 import click
@@ -28,22 +29,6 @@ from ... import PathLike
 
 
 logger: logging.Logger = logging.getLogger(__name__)
-
-
-@dataclass
-class Config:
-    """Configuration data."""
-
-    def update(self, **kwargs: Any) -> None:
-        """Add or update attributes.
-
-        Parameters
-        ----------
-        kwargs : Any
-            Dict of attributes to add
-        """
-        for key, value in kwargs.items():
-            setattr(self, key, value)
 
 
 def configure(ctx: click.Context, param: List[Any], filename: PathLike) -> None:
@@ -62,3 +47,29 @@ def configure(ctx: click.Context, param: List[Any], filename: PathLike) -> None:
         logger.debug(f"Using configuration file: {filename}")
         with open(filename) as config_file:
             ctx.default_map = yaml.safe_load(config_file)
+
+
+def make_config(default_map: Dict[str, Any], cls_name: str = "Config") -> Any:
+    """Create a configuration dataclass.
+
+    Creates a dataclass from a dictionary, and nested dictionary is transformed into
+    another dataclass, which is subsequently nested in the main dataclass.
+
+    Parameters
+    ----------
+    default_map: Dict[str, Any]
+        configuration data from the CLI
+    cls_name: str
+        name of the dataclass
+
+    Returns
+    -------
+    Config
+        a configuration dataclass
+    """
+    data = default_map.copy()
+    for key, value in data.items():
+        if isinstance(value, dict):
+            data[key] = make_config(value, key.title())(**value)
+
+    return make_dataclass(cls_name, data)(**data)

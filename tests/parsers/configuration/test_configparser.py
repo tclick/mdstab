@@ -19,64 +19,10 @@ from dataclasses import is_dataclass
 import click
 import pytest
 
-from mdstab.parsers.configuration.configparser import Config
 from mdstab.parsers.configuration.configparser import configure
+from mdstab.parsers.configuration.configparser import make_config
 
 from ...datafile import TRAJFILES
-
-
-class TestConfig:
-    """Test Config class."""
-
-    @pytest.fixture
-    def context(self) -> Config:
-        """Create an mock click.Context object.
-
-        Returns
-        -------
-        Config
-            a mock click.Context object
-        """
-        config = Config()
-        config.analysis = "coordinates"
-        return config
-
-    def test_config(self, context: Config) -> None:
-        """Test the Config class.
-
-        GIVEN a Config class
-        WHEN the class is initialized
-        THEN the object should be of type `dataclass`
-
-        Parameters
-        ----------
-        context: Config
-            mock object
-        """
-        assert is_dataclass(context)
-        assert hasattr(context, "analysis")
-        assert context.analysis == "coordinates"
-
-    def test_update(self, context: Config) -> None:
-        """Test functionality of update method.
-
-        GIVEN a Config object
-        WHEN a dict is included in the update method
-        THEN the object should add the new attribute
-
-        Parameters
-        ----------
-        context: Config
-            mock object
-        """
-        kwargs = dict(debug=True, startres=1)
-        context.update(**kwargs)
-
-        assert hasattr(context, "analysis")
-        assert hasattr(context, "debug")
-        assert hasattr(context, "startres")
-        assert context.debug
-        assert context.startres == 1
 
 
 class TestConfigParser:
@@ -112,3 +58,18 @@ class TestConfigParser:
         assert len(ctx.default_map) > 0  # type: ignore
         assert "trajfiles" in ctx.default_map  # type: ignore
         assert ctx.default_map["trajfiles"] is not None  # type: ignore
+
+    def test_make_config(self, ctx: click.Context) -> None:
+        """Test the make_config function.
+
+        Parameters
+        ----------
+        ctx: click.Context
+            mock object
+        """
+        configure(ctx, [], TRAJFILES)
+        config = make_config(ctx.default_map)
+
+        assert is_dataclass(config)
+        assert hasattr(config, "trajfiles")
+        assert config.trajfiles is not None
