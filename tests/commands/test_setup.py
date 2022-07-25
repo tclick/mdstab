@@ -55,6 +55,8 @@ class TestSetup:
         ----------
         runner : CliRunner
             Test runner
+        tmp_path : Path
+            temporary directory
         """
         logfile = tmp_path / "setup.log"
         result = runner.invoke(
