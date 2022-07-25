@@ -23,7 +23,6 @@ from click_extra.logging import logger as clog
 from MDAnalysis.analysis import rms
 
 from .. import _MASK
-from .. import PathLike
 from .. import __copyright__
 from .. import create_logger
 
@@ -99,10 +98,10 @@ _short_help = "Calculate r.m.s.f."
     help=f"Atom selection {list(_MASK.keys())}",
 )
 def cli(
-    topology: PathLike,
-    trajectory: PathLike,
-    outfile: PathLike,
-    logfile: PathLike,
+    topology: Path,
+    trajectory: Path,
+    outfile: Path,
+    logfile: Path,
     start: int,
     stop: int,
     offset: int,
