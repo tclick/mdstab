@@ -19,6 +19,7 @@ from tempfile import TemporaryDirectory
 
 import pytest
 from click.testing import CliRunner
+from click_extra import platform
 
 from mdstab import cli
 
@@ -57,7 +58,8 @@ class TestSetup:
         runner : CliRunner
             Test runner
         """
-        with TemporaryDirectory() as outdir:
+        ignore_cleanup = platform.is_windows()
+        with TemporaryDirectory(ignore_cleanup_errors=ignore_cleanup) as outdir:
             out_dir = Path(outdir)
             logfile = out_dir / "setup.log"
             result = runner.invoke(
