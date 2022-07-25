@@ -78,7 +78,6 @@ class TestRmsf:
                 logfile.as_posix(),
             ],
         )
-        print(result.output)
 
         assert result.exit_code == 0
         assert logfile.is_file()
