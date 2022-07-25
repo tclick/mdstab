@@ -25,7 +25,9 @@ PROJ = resource_filename(__name__, Path().joinpath("data", "projection.csv").as_
 PROJNP = resource_filename(
     __name__, Path().joinpath("data", "projection.npy").as_posix()
 )
+TOP = resource_filename(__name__, Path().joinpath("data", "1qmt.prmtop").as_posix())
 TOPWW = resource_filename(__name__, Path().joinpath("data", "protein.parm7").as_posix())
+TRJ = resource_filename(__name__, Path().joinpath("data", "prod.nc").as_posix())
 TRJWW = resource_filename(__name__, Path().joinpath("data", "protein.nc").as_posix())
 
 # Cluster data
