@@ -31,57 +31,88 @@ Why does this file exist, and why not put this in __main__?
 import logging
 import sys
 from pathlib import Path
+from typing import Any
 from typing import List
 from typing import Optional
 
-import click
-from click import core
+import click_extra as click
 
+from . import PathLike
+from . import __copyright__
 from . import __version__
 
 
 CONTEXT_SETTINGS = dict(
-    auto_envvar_prefix="COMPLEX", help_option_names=["-h", "--help"]
+    auto_envvar_prefix="COMPLEX", help_option_names=["-h", "--help"], show_default=True
 )
 logger = logging.getLogger()
 cmd_folder = Path(__file__).parent.joinpath("commands").resolve()
 
 
-class _ComplexCLI(click.MultiCommand):
-    """Complex command-line options with subcommands for mdta.
+class Environment:
+    """Context manager for click command-line interface."""
 
-    This code came from
-    https://click.palletsprojects.com/en/8.1.x/commands/?highlight=subcommand
-    """
+    def log(self, msg: str, *args: List[str]) -> None:
+        """Log a message to stderr.
 
-    def list_commands(self, ctx: click.Context) -> List[str]:
+        Parameters
+        ----------
+        msg : str
+            Log message
+        args : list of strings
+            additional arguments to be passed
+        """
+        if args:
+            msg %= args
+        click.echo(msg, file=sys.stderr)
+
+    def vlog(self, msg: str, *args: List[str]) -> None:
+        """Log a message to stderr only if verbose is enabled.
+
+        Parameters
+        ----------
+        msg : str
+            Log message
+        args : list of strings
+            additional arguments to be passed
+        """
+        if self.verbose:
+            self.log(msg, *args)
+
+
+pass_environment = click.make_pass_decorator(Environment, ensure=True)
+
+
+class ComplexCLI(click.MultiCommand):
+    """Complex command-line options with subcommands for fluctmatch."""
+
+    def list_commands(self, ctx: click.Context) -> Optional[List[str]]:
         """List available commands.
 
         Parameters
         ----------
-        ctx : Context
+        ctx : `Context`
             click context
 
         Returns
         -------
-        List of str
             List of available commands
         """
-        commands: List[str] = []
-        for filename in cmd_folder.iterdir():
-            if filename.suffix == ".py" and filename.stem.startswith("cmd_"):
-                commands.append(filename.stem[4:])
-        commands.sort()
-        return commands
+        rv = []
+        for filename in Path(cmd_folder).iterdir():
+            if filename.name.endswith(".py") and filename.name.startswith("cmd_"):
+                rv.append(filename.name[4:-3])
+        rv.sort()
+        return rv
 
-    def get_command(self, ctx: click.Context, cmd_name: str) -> Optional[core.Command]:
+    def get_command(self, ctx: click.Context, name: str) -> Optional[Any]:
         """Run the selected command.
 
         Parameters
         ----------
-        ctx : Context
+        ctx : `Context`
             click context
-        cmd_name : str
+        name : str
             command name
 
         Returns
@@ -89,16 +120,22 @@ class _ComplexCLI(click.MultiCommand):
             The chosen command if present
         """
         try:
-            if sys.version_info[0] == 2:
-                cmd_name = cmd_name.encode("ascii", "replace")
-            mod = __import__("mdta.commands.cmd_" + cmd_name, None, None, ["cli"])
+            mod = __import__(f"mdstab.commands.cmd_{name}", None, None, ["cli"])
         except ImportError:
             return None
         return mod.cli
 
 
-@click.command(cls=_ComplexCLI, context_settings=CONTEXT_SETTINGS)
-@click.version_option(__version__)
-def main() -> None:
-    """Run main command-line interface."""
-    pass
+@click.command(cls=ComplexCLI, context_settings=CONTEXT_SETTINGS, help=__copyright__)
+@click.colorize.version_option(version=__version__)
+@click.option(
+    "--home",
+    type=click.Path(exists=True, file_okay=False, resolve_path=True, path_type=Path),
+    help="Changes the folder to operate on.",
+)
+@click.config_option()
+@pass_environment
+def main(ctx: click.Context, home: PathLike) -> None:
+    """Molecular dynamics setup and trajectory analysis for biomolecules."""
+    if home is not None:
+        ctx.home = home

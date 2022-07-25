@@ -15,17 +15,15 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """Molecular Dynamics Setup and Trajectory Analysis for Biomolecules."""
 import logging
+import logging.config
 import os
 from typing import TYPE_CHECKING
-from typing import Any
-from typing import Dict
 from typing import Union
 
+import yaml
+from click_extra.logging import logger as clog
 from license.licenses import GPLv3LaterLicense
 
-
-logger: logging.Logger = logging.getLogger(__name__)
-logger.addHandler(logging.NullHandler())
 
 if TYPE_CHECKING:
     PathLike = Union[str, os.PathLike[str]]
@@ -38,19 +36,23 @@ _email: str = "Timothy.Click@briarcliff.edu"
 __copyright__: str = GPLv3LaterLicense.header(name=_name, email=_email)
 
 
-def create_logging_dict(logfile: PathLike, level: int) -> Dict[str, Any]:
-    """Configure the logger.
+def create_logger(
+    name: str, level: int = logging.INFO, logfile: PathLike = "output.log"
+) -> clog:
+    """Create a logger.
 
     Parameters
     ----------
-    logfile : PathLike
-        Filename for log output.
+    name : str
+        name of module
     level : int
         logging level
+    logfile : PathLike
+        filename
+
     Returns
     -------
-    Dict
-        Configuration data for logging.
+    logger
 
     Raises
     ------
@@ -60,34 +62,31 @@ def create_logging_dict(logfile: PathLike, level: int) -> Dict[str, Any]:
     if not logfile:
         raise ValueError("Filename not defined.")
 
-    logger_dict = dict(
-        version=1,
-        disable_existing_loggers=False,  # this fixes the problem
-        formatters=dict(
-            standard={
-                "class": "logging.Formatter",
-                "format": "%(name)-12s %(levelname)-8s %(message)s",
-            },
-            detailed={
-                "class": "logging.Formatter",
-                "format": ("%(asctime)s %(name)-15s %(levelname)-8s " "%(message)s"),
-                "datefmt": "%m-%d-%y %H:%M",
-            },
-        ),
-        handlers=dict(
-            console={
-                "class": "logging.StreamHandler",
-                "level": level,
-                "formatter": "standard",
-            },
-            file={
-                "class": "logging.FileHandler",
-                "filename": logfile,
-                "level": level,
-                "mode": "w",
-                "formatter": "detailed",
-            },
-        ),
-        root=dict(level="INFO", handlers=["console", "file"]),
-    )
-    return logger_dict
+    logger_dict = f"""
+    version: 1
+    disable_existing_loggers: False
+    formatters:
+        default:
+            format: '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'
+            datefmt: '%Y-%m-%d %H:%M:%S'
+    handlers:
+        console:
+            class: logging.StreamHandler
+            level: {level}
+            stream: ext://sys.stdout
+            formatter: default
+        file:
+            class: logging.FileHandler
+            filename: {logfile}
+            level: {level}
+            mode: w
+            formatter: default
+    root:
+        level: {level}
+        handlers:
+            - console
+            - file
+    """
+    logdict = yaml.safe_load(logger_dict)
+    logging.config.dictConfig(logdict)
+    return logging.getLogger(name)
