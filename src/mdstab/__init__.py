@@ -18,6 +18,7 @@ import logging
 import logging.config
 import os
 from typing import TYPE_CHECKING
+from typing import Dict
 from typing import Union
 
 import yaml
@@ -34,6 +35,17 @@ __version__: str = "0.0.0"
 _name: str = "Timothy H. Click, Ph.D."
 _email: str = "Timothy.Click@briarcliff.edu"
 __copyright__: str = GPLv3LaterLicense.header(name=_name, email=_email)
+
+_MASK: Dict[str, str] = dict(
+    ca="protein and name CA",
+    cab="protein and name C[AB]",
+    backbone="backbone",
+    sidechain="protein and not backbone and not element H*)",
+    noh="protein and not element H*)",
+    nucleic="nucleic",
+    nucleicbb="nucleicbackbone",
+    all="all",
+)
 
 
 def create_logger(
