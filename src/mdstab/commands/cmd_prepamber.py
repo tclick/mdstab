@@ -19,8 +19,8 @@ import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
-import click_extra as click
 import MDAnalysis as mda
+import click_extra as click
 from click_extra.logging import logger as clog
 from jinja2 import Environment
 from jinja2 import PackageLoader
@@ -28,7 +28,6 @@ from jinja2 import PackageLoader
 from .. import PathLike
 from .. import __copyright__
 from .. import create_logger
-
 
 _help = f"{__copyright__}\n\nPrepare Amber simulation files."
 _short_help = "Prepare Amber input files."

@@ -20,7 +20,6 @@ import pytest
 from click.testing import CliRunner
 
 from mdstab import cli
-
 from ..datafile import TOP
 from ..datafile import TRJ
 
