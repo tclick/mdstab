@@ -1,23 +1,23 @@
 # Molecular Dynamics Trajectory Analysis
 
-[![PyPI](https://img.shields.io/pypi/v/mdta.svg)][pypi_]
-[![Status](https://img.shields.io/pypi/status/mdta.svg)][status]
-[![Python Version](https://img.shields.io/pypi/pyversions/mdta)][python version]
-[![License](https://img.shields.io/pypi/l/mdta)][license]
+[![PyPI](https://img.shields.io/pypi/v/mdstab.svg)][pypi_]
+[![Status](https://img.shields.io/pypi/status/mdstab.svg)][status]
+[![Python Version](https://img.shields.io/pypi/pyversions/mdstab)][python version]
+[![License](https://img.shields.io/pypi/l/mdstab)][license]
 
-[![Read the documentation at https://mdta.readthedocs.io/](https://img.shields.io/readthedocs/mdta/latest.svg?label=Read%20the%20Docs)][read the docs]
-[![Tests](https://github.com/tclick/mdta/workflows/Tests/badge.svg)][tests]
-[![Codecov](https://codecov.io/gh/tclick/mdta/branch/main/graph/badge.svg)][codecov]
+[![Read the documentation at https://mdstab.readthedocs.io/](https://img.shields.io/readthedocs/mdstab/latest.svg?label=Read%20the%20Docs)][read the docs]
+[![Tests](https://github.com/tclick/mdstab/workflows/Tests/badge.svg)][tests]
+[![Codecov](https://codecov.io/gh/tclick/mdstab/branch/main/graph/badge.svg)][codecov]
 
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)][pre-commit]
 [![Black](https://img.shields.io/badge/code%20style-black-000000.svg)][black]
 
-[pypi_]: https://pypi.org/project/mdta/
-[status]: https://pypi.org/project/mdta/
-[python version]: https://pypi.org/project/mdta
-[read the docs]: https://mdta.readthedocs.io/
-[tests]: https://github.com/tclick/mdta/actions?workflow=Tests
-[codecov]: https://app.codecov.io/gh/tclick/mdta
+[pypi_]: https://pypi.org/project/mdstab/
+[status]: https://pypi.org/project/mdstab/
+[python version]: https://pypi.org/project/mdstab
+[read the docs]: https://mdstab.readthedocs.io/
+[tests]: https://github.com/tclick/mdstab/actions?workflow=Tests
+[codecov]: https://app.codecov.io/gh/tclick/mdstab
 [pre-commit]: https://github.com/pre-commit/pre-commit
 [black]: https://github.com/psf/black
 
@@ -74,11 +74,11 @@ This project was generated from [@cjolowicz]'s [Hypermodern Python Cookiecutter]
 [@cjolowicz]: https://github.com/cjolowicz
 [pypi]: https://pypi.org/
 [hypermodern python cookiecutter]: https://github.com/cjolowicz/cookiecutter-hypermodern-python
-[file an issue]: https://github.com/tclick/mdta/issues
+[file an issue]: https://github.com/tclick/mdstab/issues
 [pip]: https://pip.pypa.io/
 
 <!-- github-only -->
 
-[license]: https://github.com/tclick/mdta/blob/main/LICENSE
-[contributor guide]: https://github.com/tclick/mdta/blob/main/CONTRIBUTING.md
-[command-line reference]: https://mdta.readthedocs.io/en/latest/usage.html
+[license]: https://github.com/tclick/mdstab/blob/main/LICENSE
+[contributor guide]: https://github.com/tclick/mdstab/blob/main/CONTRIBUTING.md
+[command-line reference]: https://mdstab.readthedocs.io/en/latest/usage.html
