@@ -15,11 +15,9 @@
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """Test setup subcommand."""
 from pathlib import Path
-from tempfile import TemporaryDirectory
 
 import pytest
 from click.testing import CliRunner
-from click_extra import platform
 
 from mdstab import cli
 
@@ -50,7 +48,7 @@ class TestSetup:
         assert result.exit_code == 0
         assert "--verbosity" in result.output
 
-    def test_setup(self, runner: CliRunner) -> None:
+    def test_setup(self, runner: CliRunner, tmp_path: Path) -> None:
         """Test setup of MD subdirectories.
 
         Parameters
@@ -58,14 +56,11 @@ class TestSetup:
         runner : CliRunner
             Test runner
         """
-        ignore_cleanup = platform.is_windows()
-        with TemporaryDirectory(ignore_cleanup_errors=ignore_cleanup) as outdir:
-            out_dir = Path(outdir)
-            logfile = out_dir / "setup.log"
-            result = runner.invoke(
-                cli.main, ["setup", "-o", out_dir.as_posix(), "-l", logfile.as_posix()]
-            )
+        logfile = tmp_path / "setup.log"
+        result = runner.invoke(
+            cli.main, ["setup", "-o", tmp_path.as_posix(), "-l", logfile.as_posix()]
+        )
 
-            assert result.exit_code == 0
-            assert logfile.is_file()
-            assert (out_dir / "Prep").is_dir()
+        assert result.exit_code == 0
+        assert logfile.is_file()
+        assert (tmp_path / "Prep").is_dir()
