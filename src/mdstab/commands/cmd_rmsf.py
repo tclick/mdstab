@@ -108,7 +108,6 @@ def cli(
     calc_type: str,
 ) -> None:
     """Calculate the root mean square fluctuations of both heavy and selected atoms."""
-    """Prepare various Amber input files to run simulations."""
     click.echo(__copyright__)
 
     # Setup logging

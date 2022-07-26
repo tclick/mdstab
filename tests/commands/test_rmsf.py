@@ -53,7 +53,7 @@ class TestRmsf:
         assert "--verbosity" in result.output
 
     def test_rmsf(self, runner: CliRunner, tmp_path: Path) -> None:
-        """Test preparation of Amber simulation files.
+        """Test rmsf subcommand.
 
         Parameters
         ----------
@@ -62,7 +62,7 @@ class TestRmsf:
         tmp_path : Path
             temporary directory
         """
-        logfile = tmp_path / "setup.log"
+        logfile = tmp_path / "rmsf.log"
         outfile = tmp_path / "rmsf.npy"
         result = runner.invoke(
             cli.main,
