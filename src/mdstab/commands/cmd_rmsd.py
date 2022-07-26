@@ -20,6 +20,7 @@ import click_extra as click
 import MDAnalysis as mda
 import numpy as np
 from click_extra.logging import logger as clog
+from MDAnalysis.analysis import align
 from MDAnalysis.analysis import rms
 
 from .. import _MASK
@@ -126,9 +127,11 @@ def cli(
     reference = None
     if average:
         logger.debug("Calculating the average structure.")
-        coords = [atoms.positions for _ in universe.trajectory]
-        avg: mda.AtomGroup = atoms.copy()
-        avg.positions[:] = np.mean(coords, axis=0)
+        avg = align.AverageStructure(universe, select=select).run(
+            start=init, stop=end, step=offset
+        )
+        reference = atoms.copy()
+        reference.positions[:] = avg.results.positions
 
     logger.info(f"Calculating the r.m.s.d. for {atoms.n_atoms} atoms.")
     logger.debug(f"Start frame: {start}; stop frame: {end}; frame step: {offset}")
