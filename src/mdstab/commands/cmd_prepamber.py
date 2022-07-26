@@ -34,7 +34,7 @@ _help = f"{__copyright__}\n\nPrepare Amber simulation files."
 _short_help = "Prepare Amber input files."
 
 
-@dataclass(slots=True)
+@dataclass
 class Data:
     """Data for jinja2 template."""
 
