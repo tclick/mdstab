@@ -73,7 +73,7 @@ class TestRmsf:
                 "-f",
                 TRJWW,
                 "-o",
-                outfile,
+                outfile.as_posix(),
                 "-l",
                 logfile.as_posix(),
             ],
