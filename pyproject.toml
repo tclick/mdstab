@@ -47,6 +47,7 @@ nglview = {version = "^3.0.3", optional = true}
 Jinja2 = "^3.1.2"
 click-extra = "^3.0.1"
 netCDF4 = "^1.6.0"
+seaborn = "^0.11.2"
 
 [tool.poetry.extras]
 jupyter = ["jupyter", "jupyterlab", "jupyterlab-code-formatter",
