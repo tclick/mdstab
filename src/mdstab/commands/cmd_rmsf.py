@@ -19,8 +19,11 @@ from pathlib import Path
 import click_extra as click
 import MDAnalysis as mda
 import numpy as np
+import seaborn as sns
 from click_extra.logging import logger as clog
+from matplotlib import pyplot as plt
 from MDAnalysis.analysis import rms
+from modin import pandas as pd
 
 from .. import _MASK
 from .. import __copyright__
@@ -97,6 +100,15 @@ _short_help = "Calculate r.m.s.f."
     type=click.Choice(_MASK.keys(), case_sensitive=True),
     help=f"Atom selection {list(_MASK.keys())}",
 )
+@click.option(
+    "--label",
+    metavar="LABEL",
+    default=10,
+    show_default=True,
+    type=click.IntRange(min=1, clamp=True),
+    help="Spacing for tick labels",
+)
+@click.option("--image", is_flag=True, help="Save correlation heatmap")
 def cli(
     topology: Path,
     trajectory: Path,
@@ -106,6 +118,8 @@ def cli(
     stop: int,
     offset: int,
     calc_type: str,
+    label: int,
+    image: bool,
 ) -> None:
     """Calculate the root mean square fluctuations of both heavy and selected atoms."""
     click.echo(__copyright__)
@@ -125,3 +139,22 @@ def cli(
 
     logger.info(f"Saving r.m.s.f. data to {outfile}")
     np.save(outfile, rmsf.results.rmsf)
+
+    if image:
+        filename = outfile.with_suffix(".png")
+
+        fig: plt.Figure = plt.figure(figsize=plt.figaspect(1.0))
+        title = _MASK[calc_type]
+        df = pd.DataFrame(
+            [atoms.resnums, rmsf.results.rmsf], columns=["Residue", "r.m.s.f. (Å)"]
+        )
+        df[df.columns[0]] = df[df.columns[0]].astype(int)
+        ax = fig.add_subplot(1, 1, 1)
+        sns.barplot(x="Residue", y="r.m.s.f. (Å)", data=df, color="blue", ax=ax)
+        ax.set_title(f"{title[i]}")
+        ax.set_xticks(np.arange(label - 1, rmsf.results.rmsf.size, label))
+        fig.suptitle("Root mean square fluctuations")
+        logger.info(f"Saving image to {filename}")
+        fig.autofmt_xdate(rotation=45)
+        fig.tight_layout()
+        fig.savefig(filename, dpi=600)
