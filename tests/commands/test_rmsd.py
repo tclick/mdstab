@@ -18,6 +18,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import xarray as xr
 from click.testing import CliRunner
 
 from mdstab import cli
@@ -50,7 +51,7 @@ class TestRmsd:
         """
         result = runner.invoke(cli.main, ["rmsd", "-h"])
         assert result.exit_code == 0
-        assert "--verbosity" in result.output
+        assert "--average" in result.output
 
     def test_rmsd(self, runner: CliRunner, tmp_path: Path) -> None:
         """Test rmsd subcommand.
@@ -63,7 +64,7 @@ class TestRmsd:
             temporary directory
         """
         logfile = tmp_path / "rmsd.log"
-        outfile = tmp_path / "rmsd.npy"
+        outfile = tmp_path / "rmsd.nc"
         result = runner.invoke(
             cli.main,
             [
@@ -83,5 +84,5 @@ class TestRmsd:
         assert logfile.is_file()
         assert outfile.exists()
 
-        rmsd = np.load(outfile)
-        assert np.all(rmsd[:, 2] > 0)
+        rmsd = xr.load_dataarray(outfile)
+        assert np.all(rmsd.to_numpy() > 0)

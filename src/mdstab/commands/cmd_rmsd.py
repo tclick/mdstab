@@ -19,6 +19,7 @@ from pathlib import Path
 import click_extra as click
 import MDAnalysis as mda
 import numpy as np
+import xarray as xr
 from click_extra.logging import logger as clog
 from MDAnalysis.analysis import align
 from MDAnalysis.analysis import rms
@@ -53,7 +54,7 @@ _short_help = "Calculate r.m.s.d."
     "-o",
     "--outfile",
     metavar="FILE",
-    default=Path.cwd() / "rmsf.npy",
+    default=Path.cwd() / "rmsf.nc",
     type=click.Path(exists=False, dir_okay=False, resolve_path=True, path_type=Path),
     help="r.m.s.d. data file",
 )
@@ -135,8 +136,24 @@ def cli(
 
     logger.info(f"Calculating the r.m.s.d. for {atoms.n_atoms} atoms.")
     logger.debug(f"Start frame: {start}; stop frame: {end}; frame step: {offset}")
-    rmsd = rms.RMSD(atoms, reference=reference, select=select)
-    rmsd_ = rmsd.run(start=init, stop=end, step=offset)
+    rmsd_ = rms.RMSD(atoms, reference=reference, select=select).run(
+        start=init, stop=end, step=offset
+    )
+    rmsd = xr.DataArray(
+        rmsd_.rmsd[2],
+        dims=[
+            "time",
+        ],
+        coords=dict(
+            time=(
+                [
+                    "time",
+                ],
+                rmsd_.rmsd[1],
+            )
+        ),
+        name="RMSD",
+    )
 
     logger.info(f"Saving r.m.s.d. data to {outfile}")
-    np.save(outfile, rmsd_.results.rmsd)
+    rmsd.to_netcdf(outfile)
