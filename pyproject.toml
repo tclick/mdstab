@@ -33,29 +33,28 @@ click = "^8.1.3"
 holoviews = "^1.14.9"
 scikit-learn = "^1.1.2"
 MDAnalysis = "^2.2.0"
-modin = "0.15.2"
+modin = {version = "0.15.3", extras = ["dask"] }
 PyYAML = "^6.0"
 pylibyaml = "^0.1.0"
 license = "^0.1a3"
 jupyter = {version = "^1.0.0", optional = true}
-ipykernel = {version = "^6.15.0", optional = true}
+ipykernel = {version = "^6.15.2", optional = true}
 plotly = {version = "^5.9.0", optional = true}
-jupyterlab = {version = "^3.4.4", optional = true}
+jupyterlab = {version = "^3.4.5", optional = true}
 jupyterlab-code-formatter = {version = "^1.5.0", optional = true}
 jupyterlab-mathjax3 = {version = "^4.3.0", optional = true}
 nglview = {version = "^3.0.3", optional = true}
 Jinja2 = "^3.1.2"
 click-extra = "^3.0.1"
 netCDF4 = "^1.6.0"
-seaborn = "^0.11.2"
-xarray-extras = "^0.5.0"
+seaborn = "^0.12.0"
 
 [tool.poetry.extras]
 jupyter = ["jupyter", "jupyterlab", "jupyterlab-code-formatter",
     "jupyterlab-mathjax3", "nglview", "ipykernal", "plotly"]
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.2"
+pytest = "^7.1.3"
 pytest-cache = "^1.0"
 pytest-console-scripts = "^1.3.1"
 pytest-cov = "^3.0.0"
@@ -67,7 +66,7 @@ coverage = {version = "^6.4.4", extras = ["toml"]}
 safety = "^2.1.1"
 mypy = "^0.971"
 typeguard = "^2.13.3"
-xdoctest = {version = "^1.0.2", extras = ["colors"]}
+xdoctest = {version = "^1.1.0", extras = ["colors"]}
 Sphinx = "^5.1.0"
 sphinx-autobuild = "^2021.3.14"
 sphinx-automodapi = "^0.14.1"
@@ -75,9 +74,9 @@ sphinx-rtd-theme = "^1.0.0"
 sphinx-click = "^4.2.0"
 pre-commit = "^2.19.0"
 pre-commit-hooks = "^4.3.0"
-black = "^22.3.0"
+black = "^22.8.0"
 flake8 = "^5.0.4"
-flake8-bandit = "^3.0.0"
+flake8-bandit = "^4.1.1"
 flake8-black = "^0.3.3"
 flake8-bugbear = "^22.8"
 flake8-docstrings = "^1.6.0"
@@ -87,8 +86,8 @@ pep8-naming = "^0.13.2"
 darglint = "^1.8.1"
 reorder-python-imports = "^3.1.0"
 Pygments = "^2.12.0"
-ipython = "^8.4.0"
-towncrier = "^21.9.0"
+ipython = "^8.5.0"
+towncrier = "^22.8.0"
 nox = "^2022.8.7"
 nox-poetry = "^1.0.0"
 numpydoc = "^1.4.0"
@@ -96,7 +95,7 @@ codecov = "^2.1.12"
 pyupgrade = "^2.37.3"
 types-PyYAML = "^6.0.9"
 types-click = "^7.1.8"
-ipykernel = "^6.15.0"
+ipykernel = "^6.15.2"
 types-setuptools = "^65.3"
 
 [tool.poetry.scripts]
