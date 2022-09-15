@@ -18,7 +18,7 @@ from pathlib import Path
 
 import click_extra as click
 import MDAnalysis as mda
-import numpy as np
+import xarray as xr
 from click_extra.logging import logger as clog
 from MDAnalysis.analysis import rms
 
@@ -52,7 +52,7 @@ _short_help = "Calculate r.m.s.f."
     "-o",
     "--outfile",
     metavar="FILE",
-    default=Path.cwd() / "rmsf.npy",
+    default=Path.cwd() / "rmsf.nc",
     type=click.Path(exists=False, dir_okay=False, resolve_path=True, path_type=Path),
     help="r.m.s.f. data file",
 )
@@ -121,7 +121,23 @@ def cli(
 
     logger.info(f"Calculating the r.m.s.f. for {atoms.n_atoms} atoms.")
     logger.debug(f"Start frame: {start}; stop frame: {end}; frame step: {offset}")
-    rmsf = rms.RMSF(atoms).run(start=start - 1, stop=end, step=offset)
+    rmsf_ = rms.RMSF(atoms).run(start=start - 1, stop=end, step=offset)
+
+    rmsf = xr.DataArray(
+        rmsf_.results.rmsf,
+        dims=[
+            "atom",
+        ],
+        coords=dict(
+            atoms=(
+                [
+                    "atom",
+                ],
+                atoms.ix + 1 if calc_type != "ca" else atoms.residues.resnums,
+            )
+        ),
+        name="RMSF",
+    )
 
     logger.info(f"Saving r.m.s.f. data to {outfile}")
-    np.save(outfile, rmsf.results.rmsf)
+    rmsf.to_netcdf(outfile)

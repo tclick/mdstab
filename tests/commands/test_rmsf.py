@@ -18,6 +18,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import xarray as xr
 from click.testing import CliRunner
 
 from mdstab import cli
@@ -50,7 +51,6 @@ class TestRmsf:
         """
         result = runner.invoke(cli.main, ["rmsf", "-h"])
         assert result.exit_code == 0
-        assert "--verbosity" in result.output
 
     def test_rmsf(self, runner: CliRunner, tmp_path: Path) -> None:
         """Test rmsf subcommand.
@@ -63,7 +63,7 @@ class TestRmsf:
             temporary directory
         """
         logfile = tmp_path / "rmsf.log"
-        outfile = tmp_path / "rmsf.npy"
+        outfile = tmp_path / "rmsf.nc"
         result = runner.invoke(
             cli.main,
             [
@@ -83,5 +83,5 @@ class TestRmsf:
         assert logfile.is_file()
         assert outfile.exists()
 
-        rmsf = np.load(outfile)
-        assert np.all(rmsf > 0)
+        rmsf = xr.load_dataarray(outfile)
+        assert np.all(rmsf.to_numpy() > 0)
