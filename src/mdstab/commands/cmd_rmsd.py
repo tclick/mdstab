@@ -139,7 +139,7 @@ def cli(
         start=init, stop=end, step=offset
     )
     rmsd = xr.DataArray(
-        rmsd_.results.rmsd[2],
+        rmsd_.results.rmsd[:, 2],
         dims=[
             "time",
         ],
@@ -148,7 +148,7 @@ def cli(
                 [
                     "time",
                 ],
-                rmsd_.results.rmsd[1],
+                rmsd_.results.rmsd[:, 1],
             )
         ),
         name="RMSD",
