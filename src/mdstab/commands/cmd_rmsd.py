@@ -18,7 +18,6 @@ from pathlib import Path
 
 import click_extra as click
 import MDAnalysis as mda
-import numpy as np
 import xarray as xr
 from click_extra.logging import logger as clog
 from MDAnalysis.analysis import align
