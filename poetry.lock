@@ -1850,6 +1850,19 @@ test = ["pytest", "pytest-cov", "pytest-mpl", "pytest-subtests"]
 uncertainties = ["uncertainties (>=3.1.6)"]
 
 [[package]]
+name = "pint-xarray"
+version = "0.3"
+description = "Physical units interface to xarray using Pint"
+category = "main"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+numpy = ">=1.17"
+pint = ">=0.16"
+xarray = ">=0.16.1"
+
+[[package]]
 name = "pkgutil_resolve_name"
 version = "1.3.10"
 description = "Resolve a name to an object."
@@ -3039,7 +3052,7 @@ xarray = []
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "0b57da77d1c3c8121f7a7e7c11f5c8d3be5c4a1443df473cb27883c3a2c0235a"
+content-hash = "11037d33b877ad8da0d0ff76061d61975bf281aa3e357d8888d00cf84f411840"
 
 [metadata.files]
 alabaster = [
@@ -4171,6 +4184,10 @@ Pillow = [
 ]
 Pint = [
     {file = "Pint-0.19.2.tar.gz", hash = "sha256:e1d4989ff510b378dad64f91711e7bdabe5ca78d75b06a18569ac454678c4baf"},
+]
+pint-xarray = [
+    {file = "pint-xarray-0.3.tar.gz", hash = "sha256:3545dfa78bee3f98eba29b8bd17500e3b5cb7c7b03a2c2781c4d4d59b6a82841"},
+    {file = "pint_xarray-0.3-py3-none-any.whl", hash = "sha256:a7d87c792a2e981cbff464bd1c875e872ef7a0c882a9395cfbc34512b3dcb1ab"},
 ]
 pkgutil_resolve_name = [
     {file = "pkgutil_resolve_name-1.3.10-py3-none-any.whl", hash = "sha256:ca27cc078d25c5ad71a9de0a7a330146c4e014c2462d9af19c6b828280649c5e"},
