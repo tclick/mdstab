@@ -46,7 +46,6 @@ class TestSetup:
         """
         result = runner.invoke(cli.main, ["setup", "-h"])
         assert result.exit_code == 0
-        assert "--verbosity" in result.output
 
     def test_setup(self, runner: CliRunner, tmp_path: Path) -> None:
         """Test setup of MD subdirectories.

@@ -49,7 +49,6 @@ class TestPrepAmber:
         """
         result = runner.invoke(cli.main, ["prepamber", "-h"])
         assert result.exit_code == 0
-        assert "--verbosity" in result.output
 
     def test_prepamber(self, runner: CliRunner, tmp_path: Path) -> None:
         """Test preparation of Amber simulation files.
